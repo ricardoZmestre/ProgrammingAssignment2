@@ -1,3 +1,7 @@
+## First attempt, following the approach in the instructions to the assignment.
+## The following functions are basically adaptations of the functions in the
+## instructions to invert matrices instead of calculating means of vectors.
+
 ## These functions allow caching the inverse of a matrix 
 ## by defining the matrix as an object to which functions
 ## are attached. Taking advantage of the lexical scoping of R,
@@ -53,3 +57,35 @@ cacheSolve(x)   # retrieve the inverse directly from memory
 x$set(matrix(rnorm(25), 5, 5))
 cacheSolve(x)
 cacheSolve(x)
+
+## And now, let's try a different approach.
+## Let's buid a single function that will get the same results, also 
+## using lexical scoping.
+
+## This function creates functions to access values of a matrix,
+## its inverse and its determinant. All are kept in memory in the
+## function's frame.
+mymatrix <- function(x = matrix(), ...) {
+	determinant <- NULL
+	inverse <- NULL
+	set <- function(y, ...) {
+		x <<- y
+		determinant <<- base::det(x)
+		if (abs(determinant) > 1e-6) inverse <<- solve(x, ...)
+		else inverse <<- NULL
+	}
+	get <- function() x
+	inv <- function() inverse
+	det <- function() determinant
+	set(x, ...)
+	list(set = set, get = get, inv = inv, det = det)
+}
+
+# test of mymatrix()
+#source('mymatrix.R')
+x <- mymatrix(matrix(rnorm(5*5), 5, 5))
+x$get()
+x$det()
+x$inv()
+solve(x$get())
+
