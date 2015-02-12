@@ -1,6 +1,7 @@
 ## First attempt, following the approach in the instructions to the assignment.
-## The following functions are basically adaptations of the functions in the
-## instructions to invert matrices instead of calculating means of vectors.
+## The following functions are basically versions of the functions in the
+## instructions of assignment 2, in which a matrix is inverted instead of 
+## calculating the mean of a vector.
 
 ## These functions allow caching the inverse of a matrix 
 ## by defining the matrix as an object to which functions
@@ -49,12 +50,12 @@ cacheSolve <- function(x, ...) {
 
 ## This section of the code calls the functions
 # 1. create the object with values
-x <- makeCacheMatrix(matrix(rnorm(16), 4, 4))
+x <- makeCacheMatrix(matrix(rnorm(4*4), 4, 4))
 x$get()         # check that the matrix was correctly created
 cacheSolve(x)   # retrieve the inverse, with calculation
 cacheSolve(x)   # retrieve the inverse directly from memory
 # 2. redo, with new matrix
-x$set(matrix(rnorm(25), 5, 5))
+x$set(matrix(rnorm(5*5), 5, 5))
 cacheSolve(x)
 cacheSolve(x)
 
@@ -64,7 +65,9 @@ cacheSolve(x)
 
 ## This function creates functions to access values of a matrix,
 ## its inverse and its determinant. All are kept in memory in the
-## function's frame.
+## function's frame. The three values (the matrix itself, its determinant and
+## inverse) can then be retrieved without recalculation. Only when the matrix 
+## is changed are the determinant and inverse recalculated.
 mymatrix <- function(x = matrix(), ...) {
 	determinant <- NULL
 	inverse <- NULL
@@ -82,10 +85,15 @@ mymatrix <- function(x = matrix(), ...) {
 }
 
 # test of mymatrix()
-#source('mymatrix.R')
 x <- mymatrix(matrix(rnorm(5*5), 5, 5))
 x$get()
 x$det()
 x$inv()
 solve(x$get())
+# Now, with non-invertible matrix
+x <- mymatrix(matrix(c(1, 2, 2, 4), 2, 2))
+x$get()
+x$det()
+x$inv()
+
 
