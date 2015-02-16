@@ -1,3 +1,9 @@
+## Assignment 2 in the R programming course in Coursera.
+## I have implemented two different ways to cache the inverse of a matrix in R.
+## Firstly, I have used the same approach as in the assignment itself, by which
+## two functions are used to do it: one, to create the matrix and a second one to 
+## set the inverse. Second, I have created a function that combines both tasks.
+
 ## First attempt, following the approach in the instructions to the assignment.
 ## The following functions are basically versions of the functions in the
 ## instructions of assignment 2, in which a matrix is inverted instead of 
@@ -48,7 +54,7 @@ cacheSolve <- function(x, ...) {
   inv
 }
 
-## This section of the code calls the functions
+## This section of the code calls the functions and checks that they work:
 # 1. create the object with values
 x <- makeCacheMatrix(matrix(rnorm(4*4), 4, 4))
 x$get()         # check that the matrix was correctly created
@@ -95,5 +101,3 @@ x <- mymatrix(matrix(c(1, 2, 2, 4), 2, 2))
 x$get()
 x$det()
 x$inv()
-
-
